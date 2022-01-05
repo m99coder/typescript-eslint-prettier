@@ -44,6 +44,12 @@ npm run prepare
 npx husky add .husky/pre-commit "npm run lint"
 ```
 
+Alternatively, use [lint-staged](https://github.com/okonet/lint-staged)
+
+```shell
+npx mrm@2 lint-staged
+```
+
 ## Backup
 
 ```shell
