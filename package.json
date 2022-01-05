@@ -8,8 +8,7 @@
     "lint": "eslint . --ext .ts",
     "fmt": "eslint . --ext .ts --fix",
     "start": "npm run dist && node dist/index.js",
-    "start:dev": "nodemon",
-    "prepare": "husky install"
+    "start:dev": "nodemon"
   },
   "keywords": [],
   "author": "Marco Lehmann <marco.lehmann@contentful.com>",
