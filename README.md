@@ -35,6 +35,12 @@ npm install prettier --save-dev
 npm install eslint-config-prettier eslint-plugin-prettier --save-dev
 ```
 
+> [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
+
+```shell
+npm install husky --save-dev
+```
+
 ## Backup
 
 ```shell
