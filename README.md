@@ -39,6 +39,9 @@ npm install eslint-config-prettier eslint-plugin-prettier --save-dev
 
 ```shell
 npm install husky --save-dev
+npm set-script prepare "husky install"
+npm run prepare
+npx husky add .husky/pre-commit "npm run lint"
 ```
 
 ## Backup

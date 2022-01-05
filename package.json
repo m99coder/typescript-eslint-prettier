@@ -6,10 +6,10 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "fmt": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "fmt": "eslint . --ext .ts --fix",
     "start": "npm run dist && node dist/index.js",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "Marco Lehmann <marco.lehmann@contentful.com>",
@@ -27,10 +27,5 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run fmt && npm run lint"
-    }
   }
 }
