@@ -1,4 +1,4 @@
-import { Either, failure, success } from './lib'
+import { Either, failure, none, Option, some, success } from './lib'
 
 // ––– domain errors
 type DomainError = {
@@ -118,3 +118,28 @@ console.log(
     password: 'p4ssw0rd',
   })
 )
+
+class GetUserSuccess {
+  id: string
+
+  constructor(id: string) {
+    this.id = id
+  }
+}
+
+function getUserById(id: string): Option<GetUserSuccess> {
+  try {
+    if (id === 'user-id-123') {
+      return none()
+    }
+    return some(new GetUserSuccess(id))
+  } catch (err) {
+    return none()
+  }
+}
+
+// None
+console.log(getUserById('user-id-123'))
+
+// Some: GetUserSuccess
+console.log(getUserById('user-id-456'))
