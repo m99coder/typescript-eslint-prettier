@@ -55,7 +55,7 @@ this is None<T\>
 
 #### Defined in
 
-[option.ts:41](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L41)
+option.ts:42
 
 ___
 
@@ -73,7 +73,7 @@ this is Some<T\>
 
 #### Defined in
 
-[option.ts:37](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L37)
+option.ts:38
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[option.ts:49](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L49)
+option.ts:50
 
 ___
 
@@ -121,4 +121,4 @@ ___
 
 #### Defined in
 
-[option.ts:45](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L45)
+option.ts:46

@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[either.ts:64](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L64)
+either.ts:65
 
 ___
 
@@ -68,4 +68,4 @@ ___
 
 #### Defined in
 
-[either.ts:60](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L60)
+either.ts:61

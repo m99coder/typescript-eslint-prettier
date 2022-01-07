@@ -37,7 +37,7 @@ this is Failure<F\>
 
 #### Defined in
 
-[either.ts:7](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L7)
+either.ts:8
 
 ___
 
@@ -51,7 +51,7 @@ this is Success<S\>
 
 #### Defined in
 
-[either.ts:6](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L6)
+either.ts:7
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[either.ts:9](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L9)
+either.ts:10
 
 ___
 
@@ -91,4 +91,4 @@ ___
 
 #### Defined in
 
-[either.ts:8](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L8)
+either.ts:9

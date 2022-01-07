@@ -51,7 +51,7 @@
 
 #### Defined in
 
-[option.ts:15](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L15)
+option.ts:16
 
 ## Properties
 
@@ -61,7 +61,7 @@
 
 #### Defined in
 
-[option.ts:13](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L13)
+option.ts:14
 
 ## Methods
 
@@ -79,7 +79,7 @@ this is None<T\>
 
 #### Defined in
 
-[option.ts:23](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L23)
+option.ts:24
 
 ___
 
@@ -97,7 +97,7 @@ this is Some<T\>
 
 #### Defined in
 
-[option.ts:19](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L19)
+option.ts:20
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[option.ts:31](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L31)
+option.ts:32
 
 ___
 
@@ -145,4 +145,4 @@ ___
 
 #### Defined in
 
-[option.ts:27](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L27)
+option.ts:28

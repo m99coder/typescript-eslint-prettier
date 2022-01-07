@@ -51,7 +51,7 @@
 
 #### Defined in
 
-[either.ts:15](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L15)
+either.ts:16
 
 ## Properties
 
@@ -61,7 +61,7 @@
 
 #### Defined in
 
-[either.ts:13](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L13)
+either.ts:14
 
 ## Methods
 
@@ -79,7 +79,7 @@ this is Failure<never\>
 
 #### Defined in
 
-[either.ts:23](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L23)
+either.ts:24
 
 ___
 
@@ -97,7 +97,7 @@ this is Success<S\>
 
 #### Defined in
 
-[either.ts:19](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L19)
+either.ts:20
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[either.ts:31](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L31)
+either.ts:32
 
 ___
 
@@ -145,4 +145,4 @@ ___
 
 #### Defined in
 
-[either.ts:27](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/either.ts#L27)
+either.ts:28

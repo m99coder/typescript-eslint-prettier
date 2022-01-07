@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[option.ts:58](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L58)
+option.ts:59
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[option.ts:54](https://github.com/m99coder/typescript-eslint-prettier/blob/3803c92/src/option.ts#L54)
+option.ts:55
