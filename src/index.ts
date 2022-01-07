@@ -88,6 +88,25 @@ function createUser(request: CreateUserRequest): CreateUserResult {
   }
 }
 
+function isApplicationError(
+  e: ApplicationError | DomainError
+): e is ApplicationError {
+  return 'error' in e
+}
+
+const failureHandler = (f: DomainError | ApplicationError) => {
+  if (isApplicationError(f)) {
+    console.log(`Is failure: ${f.message}: ${f.error}`)
+  } else {
+    console.log(`Is failure: ${f.message}`)
+  }
+}
+
+const createUserResultMatcher = {
+  success: (s: CreateUserSuccess) => console.log(`Is success: ${s.id}`),
+  failure: failureHandler,
+}
+
 // Failure: UserAlreadyExists
 let createUserResult = createUser({
   email: 'john.doe@example.com',
@@ -95,11 +114,8 @@ let createUserResult = createUser({
 })
 // console.log(createUserResult)
 // console.log(createUserResult.isFailure())
+createUserResult.match(createUserResultMatcher)
 
-createUserResult.match({
-  success: (s) => console.log(`Is success: ${s.id}`),
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
 // Failure: PasswordDoesntMeetCriteria
 createUserResult = createUser({
   email: 'jane.doe@example.com',
@@ -107,11 +123,7 @@ createUserResult = createUser({
 })
 // console.log(createUserResult)
 // console.log(createUserResult.isFailure())
-
-createUserResult.match({
-  success: (s) => console.log(`Is success: ${s.id}`),
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+createUserResult.match(createUserResultMatcher)
 
 // Failure: DatabaseError
 createUserResult = createUser({
@@ -120,11 +132,7 @@ createUserResult = createUser({
 })
 // console.log(createUserResult)
 // console.log(createUserResult.isFailure())
-
-createUserResult.match({
-  success: (s) => console.log(`Is success: ${s.id}`),
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+createUserResult.match(createUserResultMatcher)
 
 // Success: CreateUserSuccess
 createUserResult = createUser({
@@ -133,11 +141,7 @@ createUserResult = createUser({
 })
 // console.log(createUserResult)
 // console.log(createUserResult.isSuccess())
-
-createUserResult.match({
-  success: (s) => console.log(`Is success: ${s.id}`),
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+createUserResult.match(createUserResultMatcher)
 
 class GetUserSuccess {
   id: string
@@ -169,49 +173,32 @@ function getUserById(id: string): GetUserResult {
   }
 }
 
-// Failure: DatabaseError
-let getUserResult = getUserById('user-id')
-// console.log(getUserResult)
-// console.log(getUserResult.isFailure())
-
-getUserResult.match({
-  success: (s) => {
+const getUserResultMatcher = {
+  success: (s: Option<GetUserSuccess>) => {
     s.match({
       some: (v) => console.log(`Is success and some: ${v.id}`),
       none: () => console.log(`Is success and none`),
     })
   },
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+  failure: failureHandler,
+}
+
+// Failure: DatabaseError
+let getUserResult = getUserById('user-id')
+// console.log(getUserResult)
+// console.log(getUserResult.isFailure())
+getUserResult.match(getUserResultMatcher)
 
 // Success: None
 getUserResult = getUserById('user-id-123')
 // console.log(getUserById('user-id-123'))
 // console.log(getUserResult.isSuccess())
 // console.log(getUserResult.unwrap().isNone())
-
-getUserResult.match({
-  success: (s) => {
-    s.match({
-      some: (v) => console.log(`Is success and some: ${v.id}`),
-      none: () => console.log(`Is success and none`),
-    })
-  },
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+getUserResult.match(getUserResultMatcher)
 
 // Success: Some: GetUserSuccess
 getUserResult = getUserById('user-id-456')
 // console.log(getUserResult)
 // console.log(getUserResult.isSuccess())
 // console.log(getUserResult.unwrap().isSome())
-
-getUserResult.match({
-  success: (s) => {
-    s.match({
-      some: (v) => console.log(`Is success and some: ${v.id}`),
-      none: () => console.log(`Is success and none`),
-    })
-  },
-  failure: (f) => console.log(`Is failure: ${f.message}`),
-})
+getUserResult.match(getUserResultMatcher)
