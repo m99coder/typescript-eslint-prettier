@@ -109,40 +109,28 @@ const createUserResultMatcher = {
 }
 
 // Failure: UserAlreadyExists
-let createUserResult = createUser({
+createUser({
   email: 'john.doe@example.com',
   password: 'easy',
-})
-// console.log(createUserResult)
-// console.log(createUserResult.isFailure())
-createUserResult.match(createUserResultMatcher)
+}).match(createUserResultMatcher)
 
 // Failure: PasswordDoesntMeetCriteria
-createUserResult = createUser({
+createUser({
   email: 'jane.doe@example.com',
   password: 'easy',
-})
-// console.log(createUserResult)
-// console.log(createUserResult.isFailure())
-createUserResult.match(createUserResultMatcher)
+}).match(createUserResultMatcher)
 
 // Failure: DatabaseError
-createUserResult = createUser({
+createUser({
   email: 'jane.doe@example.com',
   password: 'password',
-})
-// console.log(createUserResult)
-// console.log(createUserResult.isFailure())
-createUserResult.match(createUserResultMatcher)
+}).match(createUserResultMatcher)
 
 // Success: CreateUserSuccess
-createUserResult = createUser({
+createUser({
   email: 'jane.doe@example.com',
   password: 'p4ssw0rd',
-})
-// console.log(createUserResult)
-// console.log(createUserResult.isSuccess())
-createUserResult.match(createUserResultMatcher)
+}).match(createUserResultMatcher)
 
 class GetUserSuccess {
   id: string
@@ -185,21 +173,10 @@ const getUserResultMatcher = {
 }
 
 // Failure: DatabaseError
-let getUserResult = getUserById('user-id')
-// console.log(getUserResult)
-// console.log(getUserResult.isFailure())
-getUserResult.match(getUserResultMatcher)
+getUserById('user-id').match(getUserResultMatcher)
 
 // Success: None
-getUserResult = getUserById('user-id-123')
-// console.log(getUserById('user-id-123'))
-// console.log(getUserResult.isSuccess())
-// console.log(getUserResult.unwrap().isNone())
-getUserResult.match(getUserResultMatcher)
+getUserById('user-id-123').match(getUserResultMatcher)
 
 // Success: Some: GetUserSuccess
-getUserResult = getUserById('user-id-456')
-// console.log(getUserResult)
-// console.log(getUserResult.isSuccess())
-// console.log(getUserResult.unwrap().isSome())
-getUserResult.match(getUserResultMatcher)
+getUserById('user-id-456').match(getUserResultMatcher)
