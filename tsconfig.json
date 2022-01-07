@@ -18,4 +18,17 @@
   "include": [
     "src/**/*"
   ],
+  "typedocOptions": {
+    "entryPoints": [
+      "src/either.ts",
+      "src/option.ts"
+    ],
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "out": "docs",
+    "plugin": [
+      "typedoc-plugin-markdown"
+    ],
+    "readme": "none",
+  }
 }
