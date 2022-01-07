@@ -1,7 +1,7 @@
 {
   "name": "typescript-starter",
   "version": "0.0.1",
-  "description": "> [Node Starter Project](https://khalilstemmler.com/blogs/typescript/node-starter-project/)",
+  "description": "Basic starter for TypeScript with ESLint and Prettier",
   "main": "index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
@@ -11,7 +11,7 @@
     "start:dev": "nodemon"
   },
   "keywords": [],
-  "author": "Marco Lehmann <marco.lehmann@contentful.com>",
+  "author": "Marco Lehmann <m99@posteo.de>",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.4",
