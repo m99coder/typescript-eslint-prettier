@@ -88,10 +88,11 @@ function createUser(request: CreateUserRequest): CreateUserResult {
   }
 }
 
+// see: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
 function isApplicationError(
   e: ApplicationError | DomainError
 ): e is ApplicationError {
-  return 'error' in e
+  return (e as ApplicationError).error !== undefined
 }
 
 const failureHandler = (f: DomainError | ApplicationError) => {
