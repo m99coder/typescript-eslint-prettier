@@ -1,4 +1,5 @@
-import { Either, failure, none, Option, some, success } from './lib'
+import { Either, failure, success } from './either'
+import { none, Option, some } from './option'
 
 // ––– domain errors
 type DomainError = {
@@ -112,12 +113,13 @@ console.log(
 )
 
 // Success: CreateUserSuccess
-console.log(
-  createUser({
-    email: 'jane.doe@example.com',
-    password: 'p4ssw0rd',
-  })
-)
+const createUserResult = createUser({
+  email: 'jane.doe@example.com',
+  password: 'p4ssw0rd',
+})
+console.log(createUserResult)
+console.log(createUserResult.isSuccess())
+console.log(createUserResult.unwrap().id)
 
 class GetUserSuccess {
   id: string
@@ -127,19 +129,42 @@ class GetUserSuccess {
   }
 }
 
-function getUserById(id: string): Option<GetUserSuccess> {
+type GetUserResult = Either<
+  Option<GetUserSuccess>,
+  DomainError | ApplicationError
+>
+
+function getUserById(id: string): GetUserResult {
   try {
-    if (id === 'user-id-123') {
-      return none()
+    if (id === 'user-id') {
+      throw new Error(`The user id ${id} is in an invalid format.`)
     }
-    return some(new GetUserSuccess(id))
+    if (id === 'user-id-123') {
+      return success(none())
+    }
+    return success(some(new GetUserSuccess(id)))
   } catch (err) {
-    return none()
+    if (err instanceof Error) {
+      return failure(new DatabaseError(err.message))
+    }
+    return failure(new Error('Something went wrong'))
   }
 }
 
-// None
-console.log(getUserById('user-id-123'))
+// Failure: DatabaseError
+let getUserResult = getUserById('user-id')
+console.log(getUserResult)
+console.log(getUserResult.isFailure())
 
-// Some: GetUserSuccess
-console.log(getUserById('user-id-456'))
+// Success: None
+getUserResult = getUserById('user-id-123')
+console.log(getUserById('user-id-123'))
+console.log(getUserResult.isSuccess())
+console.log(getUserResult.unwrap().isNone())
+
+// Success: Some: GetUserSuccess
+getUserResult = getUserById('user-id-456')
+console.log(getUserResult)
+console.log(getUserResult.isSuccess())
+console.log(getUserResult.unwrap().isSome())
+console.log(getUserResult.unwrap().unwrap().id)
