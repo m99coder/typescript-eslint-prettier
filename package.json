@@ -39,6 +39,9 @@
     "typescript": "^4.5.4"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache --fix"
+    "*.ts": [
+      "eslint --cache --fix",
+      "rimraf ./docs && typedoc"
+    ]
   }
 }
