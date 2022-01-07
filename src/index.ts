@@ -74,19 +74,17 @@ function createUser(request: CreateUserRequest): CreateUserResult {
     return failure(new PasswordDoesntMeetCriteria(request.password))
   }
 
-  let userId = '' // is there a way around initializing it here?
   try {
     if (request.password === 'password') {
       throw new Error('The worst password ever was used.')
     }
-    userId = 'user-id-123'
+    return success(new CreateUserSuccess('user-id-123'))
   } catch (err) {
     if (err instanceof Error) {
       return failure(new DatabaseError(err.message))
     }
+    return failure(new Error('Something went wrong'))
   }
-
-  return success(new CreateUserSuccess(userId))
 }
 
 // Failure: UserAlreadyExists
