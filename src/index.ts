@@ -89,37 +89,55 @@ function createUser(request: CreateUserRequest): CreateUserResult {
 }
 
 // Failure: UserAlreadyExists
-console.log(
-  createUser({
-    email: 'john.doe@example.com',
-    password: 'easy',
-  })
-)
+let createUserResult = createUser({
+  email: 'john.doe@example.com',
+  password: 'easy',
+})
+// console.log(createUserResult)
+// console.log(createUserResult.isFailure())
 
+createUserResult.match({
+  success: (s) => console.log(`Is success: ${s.id}`),
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 // Failure: PasswordDoesntMeetCriteria
-console.log(
-  createUser({
-    email: 'jane.doe@example.com',
-    password: 'easy',
-  })
-)
+createUserResult = createUser({
+  email: 'jane.doe@example.com',
+  password: 'easy',
+})
+// console.log(createUserResult)
+// console.log(createUserResult.isFailure())
+
+createUserResult.match({
+  success: (s) => console.log(`Is success: ${s.id}`),
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 
 // Failure: DatabaseError
-console.log(
-  createUser({
-    email: 'jane.doe@example.com',
-    password: 'password',
-  })
-)
+createUserResult = createUser({
+  email: 'jane.doe@example.com',
+  password: 'password',
+})
+// console.log(createUserResult)
+// console.log(createUserResult.isFailure())
+
+createUserResult.match({
+  success: (s) => console.log(`Is success: ${s.id}`),
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 
 // Success: CreateUserSuccess
-const createUserResult = createUser({
+createUserResult = createUser({
   email: 'jane.doe@example.com',
   password: 'p4ssw0rd',
 })
-console.log(createUserResult)
-console.log(createUserResult.isSuccess())
-console.log(createUserResult.unwrap().id)
+// console.log(createUserResult)
+// console.log(createUserResult.isSuccess())
+
+createUserResult.match({
+  success: (s) => console.log(`Is success: ${s.id}`),
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 
 class GetUserSuccess {
   id: string
@@ -153,18 +171,47 @@ function getUserById(id: string): GetUserResult {
 
 // Failure: DatabaseError
 let getUserResult = getUserById('user-id')
-console.log(getUserResult)
-console.log(getUserResult.isFailure())
+// console.log(getUserResult)
+// console.log(getUserResult.isFailure())
+
+getUserResult.match({
+  success: (s) => {
+    s.match({
+      some: (v) => console.log(`Is success and some: ${v.id}`),
+      none: () => console.log(`Is success and none`),
+    })
+  },
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 
 // Success: None
 getUserResult = getUserById('user-id-123')
-console.log(getUserById('user-id-123'))
-console.log(getUserResult.isSuccess())
-console.log(getUserResult.unwrap().isNone())
+// console.log(getUserById('user-id-123'))
+// console.log(getUserResult.isSuccess())
+// console.log(getUserResult.unwrap().isNone())
+
+getUserResult.match({
+  success: (s) => {
+    s.match({
+      some: (v) => console.log(`Is success and some: ${v.id}`),
+      none: () => console.log(`Is success and none`),
+    })
+  },
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
 
 // Success: Some: GetUserSuccess
 getUserResult = getUserById('user-id-456')
-console.log(getUserResult)
-console.log(getUserResult.isSuccess())
-console.log(getUserResult.unwrap().isSome())
-console.log(getUserResult.unwrap().unwrap().id)
+// console.log(getUserResult)
+// console.log(getUserResult.isSuccess())
+// console.log(getUserResult.unwrap().isSome())
+
+getUserResult.match({
+  success: (s) => {
+    s.match({
+      some: (v) => console.log(`Is success and some: ${v.id}`),
+      none: () => console.log(`Is success and none`),
+    })
+  },
+  failure: (f) => console.log(`Is failure: ${f.message}`),
+})
