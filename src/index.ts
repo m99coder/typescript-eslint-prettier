@@ -1,68 +1,15 @@
-type Either<S, F> = Success<S, F> | Failure<S, F>
+import { Either, failure, success } from './lib'
 
-class Success<S, F> {
-  readonly value: S
-
-  constructor(value: S) {
-    this.value = value
-  }
-
-  isSuccess(): this is Success<S, F> {
-    return true
-  }
-
-  isFailure(): this is Failure<S, F> {
-    return false
-  }
-}
-
-class Failure<S, F> {
-  readonly value: F
-
-  constructor(value: F) {
-    this.value = value
-  }
-
-  isSuccess(): this is Success<S, F> {
-    return false
-  }
-
-  isFailure(): this is Failure<S, F> {
-    return true
-  }
-}
-
-const success = <S, F>(l: S): Either<S, F> => {
-  return new Success(l)
-}
-
-const failure = <S, F>(a: F): Either<S, F> => {
-  return new Failure<S, F>(a)
-}
-
+// ––– domain errors
 type DomainError = {
   message: string
 }
 
-// this would require to define the message on the client side, instead we will create classes
-// type UserAlreadyExists = DomainError
-// type EmailInvalid = DomainError
-// type PasswordDoesntMeetCriteria = DomainError
-// type UsernameTaken = DomainError
-
 class UserAlreadyExists implements DomainError {
   public message: string
 
-  constructor(username: string) {
-    this.message = `The username ${username} is already taken.`
-  }
-}
-
-class EmailInvalid implements DomainError {
-  public message: string
-
   constructor(email: string) {
-    this.message = `The email ${email} is invalid.`
+    this.message = `A user with email ${email} already exists.`
   }
 }
 
@@ -70,43 +17,11 @@ class PasswordDoesntMeetCriteria implements DomainError {
   public message: string
 
   constructor(password: string) {
-    this.message = `A password must be …, ${password} is not valid.`
+    this.message = `The password ${password} doesn’t meet criteria.`
   }
 }
 
-class UsernameTaken implements DomainError {
-  public message: string
-
-  constructor(username: string) {
-    this.message = `The ${username} is already in use.`
-  }
-}
-
-type CreateUserRequest = {
-  email: string
-  password: string
-}
-
-// type CreateUserSuccess = {
-//   id: string
-// }
-class CreateUserSuccess {
-  id: string
-
-  constructor(id: string) {
-    this.id = id
-  }
-}
-
-type CreateUserResult = Either<
-  CreateUserSuccess,
-  | UserAlreadyExists
-  | EmailInvalid
-  | PasswordDoesntMeetCriteria
-  | UsernameTaken
-  | ApplicationError
->
-
+// ––– application errors
 interface ApplicationError {
   message: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -124,60 +39,84 @@ class DatabaseError implements ApplicationError {
   }
 }
 
-type User = {
-  id: string
+// ––– request/response types
+type CreateUserRequest = {
+  email: string
+  password: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class CreateUserSuccess {
+  id: string
+
+  constructor(id: string) {
+    this.id = id
+  }
+}
+
+type CreateUserResult = Either<
+  CreateUserSuccess,
+  DomainError | ApplicationError
+>
+
+// ––– usage
 function createUser(request: CreateUserRequest): CreateUserResult {
-  const userAlreadyExists = () => {
-    return false
+  const userAlreadyExists = (email: string) => {
+    return email === 'john.doe@example.com'
   }
-  const isEmailValid = () => {
-    return true
-  }
-  const passwordMatchesCriteria = () => {
-    return true
-  }
-  const isUsernameTaken = () => {
-    return false
+  const passwordMatchesCriteria = (password: string) => {
+    return password.length > 7
   }
 
-  if (userAlreadyExists()) {
+  if (userAlreadyExists(request.email)) {
     return failure(new UserAlreadyExists(request.email))
   }
-  if (!isEmailValid()) {
-    return failure(new EmailInvalid(request.email))
-  }
-  if (!passwordMatchesCriteria()) {
+  if (!passwordMatchesCriteria(request.password)) {
     return failure(new PasswordDoesntMeetCriteria(request.password))
   }
-  if (isUsernameTaken()) {
-    return failure(new UserAlreadyExists(request.email))
-  }
 
-  // create user, save it to the DB, and get the id
-  // wrap I/O in try/catch
-  // turn exceptions into meaningful errors
-  let user
+  let userId = '' // is there a way around initializing it here?
   try {
-    user = { userId: 'user-id-123' }
+    if (request.password === 'password') {
+      throw new Error('The worst password ever was used.')
+    }
+    userId = 'user-id-123'
   } catch (err) {
     if (err instanceof Error) {
       return failure(new DatabaseError(err.message))
     }
   }
 
-  // TODO: find a type-safe way to express that `user` is valid here
-  return success(new CreateUserSuccess(user?.userId || ''))
+  return success(new CreateUserSuccess(userId))
 }
 
-type Nothing = null | undefined | ''
+// Failure: UserAlreadyExists
+console.log(
+  createUser({
+    email: 'john.doe@example.com',
+    password: 'easy',
+  })
+)
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class UserService {
-  async getUserById(): Promise<User | Nothing> {
-    const userOrNothing = await Promise.resolve({ id: 'user-id-123' } as User)
-    return userOrNothing ? userOrNothing : ('' as Nothing)
-  }
-}
+// Failure: PasswordDoesntMeetCriteria
+console.log(
+  createUser({
+    email: 'jane.doe@example.com',
+    password: 'easy',
+  })
+)
+
+// Failure: DatabaseError
+console.log(
+  createUser({
+    email: 'jane.doe@example.com',
+    password: 'password',
+  })
+)
+
+// Success: CreateUserSuccess
+console.log(
+  createUser({
+    email: 'jane.doe@example.com',
+    password: 'p4ssw0rd',
+  })
+)
