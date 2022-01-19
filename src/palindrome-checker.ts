@@ -7,6 +7,9 @@ export class PalindromeChecker {
     //   return false
     // }
     const reversed = input.split('').reverse().join('')
-    return reversed.toLowerCase() === input.toLowerCase()
+    return (
+      reversed.replace(/\s+/g, '').toLowerCase() ===
+      input.replace(/\s+/g, '').toLowerCase()
+    )
   }
 }
