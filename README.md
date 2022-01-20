@@ -50,6 +50,15 @@ Alternatively, use [lint-staged](https://github.com/okonet/lint-staged)
 npx mrm@2 lint-staged
 ```
 
+## Testing
+
+```shell
+npm install eslint-plugin-jest jest jest-cucumber ts-jest @types/jest --save-dev
+npm set-script test "jest"
+npm set-script test:dev "jest --watchAll"
+npx ts-jest config:init
+```
+
 ## Backup
 
 ```shell
