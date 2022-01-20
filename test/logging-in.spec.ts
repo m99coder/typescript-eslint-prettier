@@ -1,5 +1,5 @@
 import { defineFeature, loadFeature } from 'jest-cucumber'
-import { PasswordValidator } from '../src/password-validator'
+import { PasswordValidator } from '../src/password-validator.cucumber'
 
 const feature = loadFeature('features/logging-in.feature')
 
