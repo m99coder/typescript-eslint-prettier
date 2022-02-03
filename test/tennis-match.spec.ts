@@ -25,6 +25,15 @@ describe('TennisMatch', () => {
         'Provide exactly two players'
       )
     })
+
+    it('knows the server and the receiver', () => {
+      const player1 = new Player()
+      const player2 = new Player()
+      match = new TennisMatch([player1, player2])
+
+      expect(match.server).toBe(player1)
+      expect(match.receiver).toBe(player2)
+    })
   })
 
   /**

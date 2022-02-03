@@ -25,6 +25,8 @@ export class Player {
 
 export class TennisMatch {
   private _players: Player[] = []
+  private _server: Player
+  private _receiver: Player
 
   constructor(players: Player[]) {
     if (players.length !== 2) {
@@ -32,10 +34,20 @@ export class TennisMatch {
     }
 
     this._players = players
+    this._server = players[0]
+    this._receiver = players[1]
   }
 
   public get players() {
     return this._players
+  }
+
+  public get server() {
+    return this._server
+  }
+
+  public get receiver() {
+    return this._receiver
   }
 
   public pointFor(player: Player) {
